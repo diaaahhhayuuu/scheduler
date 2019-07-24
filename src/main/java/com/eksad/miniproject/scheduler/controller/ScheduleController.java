@@ -24,16 +24,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eksad.miniproject.scheduler.dao.ScheduleDao;
 import com.eksad.miniproject.scheduler.model.Schedule;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Tag;
+
 
 @RestController
-@RequestMapping("schedule/")
+@RequestMapping(value = "/miniprojectapi/schedule")
+@Api(tags = "Scheduler")
 public class ScheduleController {
 	
 	@Autowired
-	ScheduleDao scheduleDao;
+	private ScheduleDao scheduleDao;
 
 
-	@GetMapping("getAll")
+	@ApiOperation ( 
+			value = "API to retrive to all schedule data",
+			tags = "Scheduler"
+			)
+	@GetMapping("/getAll")
 	public List<Schedule> getAll(){
 		List<Schedule> result = new ArrayList<>();
 		scheduleDao.findAll().forEach(result::add);
@@ -41,13 +50,23 @@ public class ScheduleController {
 		System.out.println(result);
 		return result;
 	}
+	
 
-	@GetMapping("getOne/{id}")
+	@ApiOperation ( 
+			value = "API to get schedule data short by ID",
+			tags = "Scheduler"
+			)
+	@GetMapping("/getOne/{id}")
 	public Schedule getOne(@PathVariable Long id) {
 		return scheduleDao.findById(id).orElse(null);
 	}
 
-	@PostMapping(value = "saveschedule")
+	
+	@ApiOperation ( 
+			value = "API to input new shedule data",
+			tags = "Scheduler"
+			)
+	@PostMapping(value = "/saveschedule")
 	public Schedule save(@RequestBody Schedule schedule) { 
 		try {
 			return scheduleDao.save(schedule);
@@ -57,7 +76,12 @@ public class ScheduleController {
 		}
 	}
 
-	@PutMapping (value = "updateschedule/{id}")
+	
+	@ApiOperation ( 
+			value = "API to update schedule data",
+			tags = "Scheduler"
+			)
+	@PutMapping (value = "/updateschedule/{id}")
 	public Schedule update(@RequestBody Schedule schedule, @PathVariable Long id) {
 		Schedule scheduleSelected = scheduleDao.findById(id).orElse(null);
 		if (scheduleSelected != null) {
@@ -68,8 +92,13 @@ public class ScheduleController {
 			return null;
 		}
 	}
+	
 
-	@DeleteMapping (value = "deleteschedule/{id}")
+	@ApiOperation ( 
+			value = "API to delete schedule data",
+			tags = "Scheduler"
+			)
+	@DeleteMapping (value = "/deleteschedule/{id}")
 	public HashMap<String, Object> delete(@PathVariable Long id){
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		scheduleDao.deleteById(id);

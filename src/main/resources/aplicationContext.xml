@@ -20,6 +20,8 @@
 
 	<!-- To run cron scheduler -->
 	<bean id="cronScheduler" class="com.eksad.miniproject.scheduler.CronScheduler"></bean>
+	
+	<!-- <bean id="holidayScheduler" class="com.eksad.miniproject.scheduler.HolidayScheduler"></bean> -->
 	 
 	 <!--<bean id="scheduleController" class="com.eksad.miniproject.scheduler.controller.ScheduleController"></bean>  -->
 </beans>
