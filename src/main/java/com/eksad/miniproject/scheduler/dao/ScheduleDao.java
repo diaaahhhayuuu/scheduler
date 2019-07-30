@@ -12,9 +12,5 @@ import com.eksad.miniproject.scheduler.model.Schedule;
 public interface ScheduleDao extends JpaRepository<Schedule, Long> {
 	
 	public Optional<Schedule> findById(Long id);
-//	public List<Schedule> findByJenis(String jenis_kegiatan);
-//	
-//	@Query("select s from Schedule s where jenis_kegiatan = :search")
-//	public List<Schedule> findBySearch(@Param("search") String search);
 
 }

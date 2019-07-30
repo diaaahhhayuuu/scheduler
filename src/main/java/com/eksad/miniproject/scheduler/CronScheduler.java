@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,7 @@ import com.eksad.miniproject.scheduler.model.Cron;
 import com.eksad.miniproject.scheduler.model.Schedule;
 
 
-@RestController
+//@RestController
 public class CronScheduler {
 	
 	private static final String URL = "jdbc:postgresql://localhost:5432/eksad";
@@ -27,7 +28,7 @@ public class CronScheduler {
 	public Connection conn() { 
 		try {
 			Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD); 
-			System.out.println("Koneksi berhasil");
+//			System.out.println("Koneksi berhasil");
 			return connection;
 		} catch (SQLException e) {
 			System.out.println("Koneksi gagal!");

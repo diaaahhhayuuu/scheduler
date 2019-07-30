@@ -34,6 +34,6 @@ public class Content {
 	private Date calendar;
 	
 	@Column(nullable = false)
-	private String content;
+	private String message;
 
 }

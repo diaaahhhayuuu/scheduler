@@ -22,9 +22,6 @@ public class Job1 implements Job {
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "postgres";
 
-	@Autowired
-	CronDao cronDao;
-
 	public Connection conn() {
 		try {
 			Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -41,59 +38,29 @@ public class Job1 implements Job {
 		try {
 			Connection con = conn();
 			Statement st = con.createStatement();
+			
+			String pilihEmail = "SELECT * FROM employee";
+			ResultSet resultEmail = st.executeQuery(pilihEmail);			
 
-			String pilihEmail = "SELECT email FROM employee";
-			ResultSet resultEmail = st.executeQuery(pilihEmail);
-
-			String pilihContent = "SELECT content FROM content";
-			ResultSet resultContent = st.executeQuery(pilihContent);
-
-			while (resultEmail.next() && resultContent.next()) {
+			while (resultEmail.next()) {
+				String nama = resultEmail.getString("name");
 				String email = resultEmail.getString("email");
-				String content = resultContent.getString("content");
 
 					System.out.println("Job has working at " + new Date());
+					
+					EmailUtil.sendEmail(email, 
+							"Holiday Announcement", 
+							"Hi, "+nama+ "! "
+							+ "Sekedar mengingatkan bahwa besok adalah hari libur diharapkan kepada seluruh karyawan untuk TIDAK DATANG ke kantor ;)");
 
-					EmailUtil.sendEmail(email, "Holiday Announcement", content);
-			}
-			
 
-			resultContent.close();
 			resultEmail.close();
 			st.close();
 			con.close();
-		} catch (SQLException e) {
+		}
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		try {
-			Connection con = conn();
-			Statement st = con.createStatement();
-
-			String pilihEmail = "SELECT email FROM employee";
-			ResultSet resultEmail = st.executeQuery(pilihEmail);
-
-			String pilihContent = "SELECT content FROM content";
-			ResultSet resultContent = st.executeQuery(pilihContent);
-
-			while (resultEmail.next() && resultContent.next()) {
-				String email = resultEmail.getString("email");
-				String content = resultContent.getString("content");
-
-					System.out.println("Job has working at " + new Date());
-
-					EmailUtil.sendEmail(email, "Holiday Announcement", content);
-			}
-			
-
-			resultContent.close();
-			resultEmail.close();
-			st.close();
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-
 	}
 }

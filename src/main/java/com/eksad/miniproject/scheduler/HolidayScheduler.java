@@ -2,6 +2,7 @@ package com.eksad.miniproject.scheduler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
@@ -23,9 +24,6 @@ public class HolidayScheduler {
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "postgres";
 	
-	@Autowired
-	CronDao cronDao;
-	
 	public Connection conn() { 
 		try {
 			Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD); 
@@ -45,17 +43,19 @@ public class HolidayScheduler {
 				Connection  con= conn();
 				System.out.println("Silakan refresh data base table Log");
 				Statement st = con.createStatement();
+				
 				Content classContent = new Content();
 				Employee classEmployee = new Employee();
 				Log classLog = new Log();
 				
-//				classCron.setCron("Cron scheduler is runing at: ");
-//				String sql ="INSERT INTO tb_cron (cron) VALUES ('"+classCron.getCron() +new Date()+"')";
+				String piliEmail = "SELECT email FROM employee WHERE id_employee = 2";
+				ResultSet resultEmail = st.executeQuery(piliEmail);
 				
-				classEmployee.setEmail("SELECT email FROM employee");
-				classContent.setContent("SELECT content FROM content");
+				String pilihContent = "SELECT message FROM content WHERE id_content = 1";
+				ResultSet resultContent = st.executeQuery(pilihContent);
+				
 				String sql = "INSERT INTO log (email, message, date_sent) VALUES ('"+classEmployee.getEmail()+"',"
-						+ "'"+classContent.getContent()+"', '"+new Date()+"')";
+						+ "'"+classContent.getMessage()+"', '"+new Date()+"')";
 				int result = st.executeUpdate(sql);
 
 				st.close();

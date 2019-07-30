@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SchedulerApplication {
 
 	public static void main(String[] args) {
+		
 //		SpringApplication.run(SchedulerApplication.class, args);
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("aplicationContext.xml");

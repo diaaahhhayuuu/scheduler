@@ -12,8 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
-@ToString (callSuper = true)
-@EqualsAndHashCode
 @Entity
 @Table (name = "tb_cron")
 public class Cron {
